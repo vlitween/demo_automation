@@ -1,0 +1,7 @@
+en:
+  page_title: Selenium
+  main_info:
+    header_1: Selenium automates browsers. That's it!
+    header_2: What you do with that power is entirely up to you.
+    description_1: Primarily it is for automating web applications for testing purposes, but is certainly not limited to just that.
+    description_2: Boring web-based administration tasks can (and should) also be automated as well.
