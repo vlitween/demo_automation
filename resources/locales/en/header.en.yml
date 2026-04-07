@@ -1,0 +1,17 @@
+en:
+  navbar:
+    about: About
+    downloads: Downloads
+    documentation: Documentation
+    projects: Projects
+    support: Support
+    blog: Blog
+    language:
+      english: English
+      portuguese: Português (Brasileiro)
+      simplified_chinese: 中文简体
+      japanese: 日本語
+  search: Search
+  announcement:
+    description: Registrations Open for SeleniumConf 2026 | May 06–08 | Join Us In-Person!
+    registration_link: Register now!

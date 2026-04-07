@@ -5,4 +5,24 @@ from framework.page_object.locators.footer import FooterLocators
 class Footer(BasePage):
     @property
     def locators(self):
-        return FooterLocators()
+        return FooterLocators(self.device)
+
+    def scroll_to_footer(self):
+        footer = self.actions.find_element(self.locators.footer)
+        self.actions.scroll_to_element(footer, to_top=False)
+
+    def check_presence(self):
+        self.scroll_to_footer()
+        self.actions.check_item_exists(self.locators.linkedin_icon)
+        self.actions.check_item_exists(self.locators.x_icon)
+        self.actions.check_item_exists(self.locators.community_youtube_icon)
+        self.actions.check_item_exists(self.locators.mastodon_icon)
+        self.actions.check_item_exists(self.locators.bluesky_icon)
+        self.actions.check_item_exists(self.locators.mailing_list_icon)
+        self.actions.check_item_exists(self.locators.youtube_channel_icon)
+        self.actions.check_item_exists(self.locators.all_rights_reserved_label)
+        self.actions.check_item_exists(self.locators.about_selenium_link)
+        self.actions.check_item_exists(self.locators.software_freedom_conservancy_icon)
+        self.actions.check_item_exists(self.locators.github_icon)
+        self.actions.check_item_exists(self.locators.slack_icon)
+        self.actions.check_item_exists(self.locators.irc_icon)

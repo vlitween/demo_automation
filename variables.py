@@ -1,1 +1,1 @@
-MAIN_URL = 'https://selenium.dev'
+MAIN_URL = 'https://www.selenium.dev'

@@ -36,8 +36,7 @@ def image_half_resize(pic: bytes):
 
 
 def allure_step_exit_wrapper(device, orig_func):
-    def wrapper(self, exc_type, exc_val, exc_tb, screenshot=True):
-
+    def wrapper(self, exc_type, exc_val, exc_tb, screenshot=device.config.attach_screenshots):
         if screenshot:
             try:
                 screenshot_data = device.get_screenshot_as_png()

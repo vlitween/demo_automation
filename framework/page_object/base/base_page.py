@@ -1,4 +1,6 @@
+import framework.utils.checks as ch
 from framework.page_object.base.actions.selenium_actions import SeleniumActions
+from framework.utils.translator import Translator
 
 
 def get_actions(device):
@@ -10,6 +12,14 @@ def get_actions(device):
 
 
 class BasePage:
+    url = None
+
     def __init__(self, device):
         self.device = device
         self.actions = get_actions(device)
+        self.checks = ch
+        self.translator = Translator(device)
+
+    def check_page_url(self):
+        actual_url = self.actions.get_page_url()
+        self.checks.verify_strings(actual_url, self.url)
