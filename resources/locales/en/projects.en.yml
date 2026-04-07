@@ -1,0 +1,47 @@
+en:
+  page_title: Projects | Selenium
+  head_section:
+    header: Projects
+    description: Selenium has many projects that combine to form a versatile testing system.
+  projects:
+    webdriver:
+      header:
+        title: Selenium WebDriver
+        description: Selenium WebDriver drives a browser natively, as a real user would, either locally or on remote machines.
+      features:
+        simple_and_concise:
+          title: Simple and concise
+          description: WebDriver is simple, it is designed as a concise and compact programming interface.
+        all_browsers:
+          title: Works in all major browsers
+          description: Through a simple setup, WebDriver can be used with all major browsers. Automate real user interactions in Firefox, Safari, Edge, Chrome, Internet Explorer and more! Selenium WebDriver refers to both the language bindings and the implementations of the individual browser controlling code. This is commonly referred to as just WebDriver.
+        w3c_recommendation:
+          title: WebDriver is a W3C Recommendation!
+          description: The W3C is an international community that works to develop Web standards. In June 2018, WebDriver became a W3C recommendation. What does this mean? Major browser vendors (Mozilla, Google, Apple, Microsoft) support WebDriver and work constantly to improve the browsers and browser controlling code, which leads to a more uniform behaviour across the different browsers, making your automation scripts more stable.
+      w3c_link: W3C Recommendation!
+    ide:
+      header:
+        title: Selenium IDE
+        description: Selenium IDE is a Chrome, Firefox and Edge extension that makes it easy to record and playback tests in the browser.
+      features:
+        web_ready:
+          title: Web Ready
+          description: Simple, turn-key solution to quickly author reliable end-to-end tests. Works out of the box for any web app.
+        easy_debugging:
+          title: Easy Debugging
+          description: Enjoy easier test debugging with rich IDE features like setting breakpoints and pausing on exceptions.
+        cross_browser_execution:
+          title: Cross-browser Execution
+          description: Run your tests on any browser/OS combination in parallel using the Command-line Runner for Selenium IDE.
+    grid:
+      header:
+        title: Selenium Grid
+        description: Selenium Grid takes WebDriver to another level by running tests on many machines at the same time, cutting down on the time it takes to test on multiple browsers and operating systems.
+      features:
+        multiple_browsers:
+          title: Multiple browsers, versions, and operating systems
+          description: Grid helps you to run your automation scripts across multiple combinations of browsers, versions and operating systems.
+        reduce_execution_time:
+          title: Reduce execution time
+          description: Speed up execution and cut down overall run time of your automation scripts. You still need scripts that can run in parallel though!
+    learn_more_link: Learn more

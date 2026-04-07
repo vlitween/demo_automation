@@ -25,3 +25,5 @@ services:
       resources:
         limits:
           memory: "2G"
+
+  # docker-compose up --scale chrome=5 -d
