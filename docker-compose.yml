@@ -13,6 +13,7 @@ services:
   chrome:
     image: selenium/node-chrome:latest
     platform: linux/amd64
+    shm_size: '2gb'
     depends_on:
       - selenium-hub
     environment:

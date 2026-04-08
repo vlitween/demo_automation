@@ -7,7 +7,7 @@ class TestMain:
     @pytest.mark.parametrize('device', ['chrome'], indirect=True)
     def test_positive(self, device, page):
         main_page = page.main_page
-        with allure.step('Open site'):
-            main_page.actions.open_url(main_page.url)
+        with allure.step('Open Main page'):
+            main_page.open_page()
         with allure.step('Check Main page'):
-            main_page.check_main_page()
+            main_page.check_page_presence()

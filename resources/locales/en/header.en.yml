@@ -1,6 +1,15 @@
 en:
   navbar:
     about: About
+    about_buttons:
+      about_selenium: About Selenium
+      structure: Structure and Governance
+      events: Events
+      ecosystem: Ecosystem
+      history: History
+      get_involved: Get Involved
+      sponsors: Sponsors
+      sponsor_us: Sponsor Us
     downloads: Downloads
     documentation: Documentation
     projects: Projects

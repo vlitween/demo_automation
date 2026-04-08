@@ -1,0 +1,6 @@
+en:
+  page_title: Downloads | Selenium
+  head_section:
+    header: Downloads
+    description_1: Below is where you can find the latest releases of all the Selenium components.
+    description_2: You can also find a list of previous releases, source code, and additional information for Maven users.

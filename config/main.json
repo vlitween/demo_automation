@@ -5,7 +5,7 @@
   "locale": "en",
   "selenium": {
     "remote_driver_address": "http://127.0.0.1:4444/wd/hub",
-    "use_local": true,
+    "use_local": false,
     "capabilities": {
             "browserName": "chrome"
         }

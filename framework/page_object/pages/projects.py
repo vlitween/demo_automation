@@ -1,5 +1,4 @@
 import allure
-import i18n
 
 import variables
 from framework.page_object.base.base_page import BasePage
@@ -35,15 +34,17 @@ class ProjectsPage(BasePage):
     def support_project(self):
         return SupportProject(self.device)
 
-    def check_projects_page(self):
+    def check_page_presence(self, fast_check=False):
         with allure.step('Wait page title'):
-            self.actions.wait_page_title(i18n.t('projects.page_title'))
+            self.actions.wait_page_title(self.translator.get_translation('projects.page_title'))
         with allure.step('Check page url'):
             self.check_page_url()
         with allure.step('Check page header'):
             self.header.check_presence()
         with allure.step('Check head section'):
             self.check_presence_head_section()
+        if fast_check:
+            return
         with allure.step('Check projects'):
             self.check_projects()
         with allure.step('Check presence Partners and Sponsors section'):
@@ -54,8 +55,7 @@ class ProjectsPage(BasePage):
             self.footer.check_presence()
 
     def check_presence_head_section(self):
-        with allure.step('Check presence head section'):
-            self.actions.check_item_exists(self.locators.head_section)
+        self.actions.check_item_exists(self.locators.head_section)
 
     def check_projects(self):
         expected_data = [

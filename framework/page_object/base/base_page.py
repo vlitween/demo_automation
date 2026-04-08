@@ -23,3 +23,6 @@ class BasePage:
     def check_page_url(self):
         actual_url = self.actions.get_page_url()
         self.checks.verify_strings(actual_url, self.url)
+
+    def open_page(self):
+        self.actions.open_url(self.url)

@@ -70,6 +70,21 @@ class HeaderLocators(BaseLocator):
         )
 
     @property
+    def about_dropdown(self):
+        about_button_text = self.translator.get_translation('header.navbar.about')
+        return self.new_locator(
+            chrome_xpath=f'//header//li[.//a[normalize-space()="{about_button_text}"]]//div[contains(@class, "dropdown-menu")]',
+            description='About navigation dropdown'
+        )
+
+    def about_dropdown_link(self, link_text):
+        about_button_text = self.translator.get_translation('header.navbar.about')
+        return self.new_locator(
+            chrome_xpath=f'//header//li[.//a[normalize-space()="{about_button_text}"]]//div[contains(@class, "dropdown-menu")]//a[normalize-space()="{link_text}"]',
+            description=f'About dropdown link "{link_text}"'
+        )
+
+    @property
     def announcement_banner(self):
         banner_text = f'{self.translator.get_translation('header.announcement.description')} {self.translator.get_translation('header.announcement.registration_link')}'
         return self.new_locator(
