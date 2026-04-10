@@ -1,4 +1,6 @@
 import framework.utils.checks as ch
+from framework.page_object.base.actions.playwright_actions import \
+    PlaywrightActions
 from framework.page_object.base.actions.selenium_actions import SeleniumActions
 from framework.utils.translator import Translator
 
@@ -7,6 +9,8 @@ def get_actions(device):
     device_type = device.device_type
     if device_type == 'selenium':
         return SeleniumActions(device)
+    elif device_type == 'playwright':
+        return PlaywrightActions(device)
     else:
         return None
 
