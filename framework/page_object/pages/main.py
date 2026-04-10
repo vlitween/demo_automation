@@ -12,7 +12,14 @@ from framework.page_object.pages.components.support_project import \
 
 
 class MainPage(BasePage):
-    url = f'{variables.MAIN_URL}/'
+
+    @property
+    def url(self):
+        if self.device.locale == 'en':
+            locale = ''
+        else:
+            locale = f'{self.device.locale}/'
+        return f'{variables.MAIN_URL}/{locale}'
 
     @property
     def locators(self):
@@ -20,7 +27,7 @@ class MainPage(BasePage):
 
     @property
     def header(self):
-        return Header(self.device)
+        return Header(self.device, translation_supported=True)
 
     @property
     def footer(self):
@@ -117,8 +124,10 @@ class MainPage(BasePage):
             self.actions.scroll_to_element(title)
         with allure.step('Check presence News section title'):
             self.actions.check_item_exists(self.locators.news_section_title)
-        with allure.step('Validate News items'):
-            self.validate_news_items_elements()
+        # Unblocking fix since news items are currently displayed only with English version of the site
+        if self.device.locale == 'en':
+            with allure.step('Validate News items'):
+                self.validate_news_items_elements()
         with allure.step('Check presence News section More News link'):
             self.actions.check_item_exists(self.locators.news_section_more_news_link)
 

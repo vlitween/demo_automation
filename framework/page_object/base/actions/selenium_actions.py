@@ -121,8 +121,11 @@ class SeleniumActions:
 
         time.sleep(0.5)
 
-    def click_element(self, locator: UniversalLocator, no_wait=False, timeout=10, should_be_visible=False):
-        element = self.find_element(locator, no_wait, timeout, should_be_visible)
+    def click_element(self, locator: UniversalLocator, parent_element=None, no_wait=False, timeout=10, should_be_visible=False):
+        if parent_element:
+            element = self.find_sub_element(parent_element, locator, no_wait, timeout)
+        else:
+            element = self.find_element(locator, no_wait, timeout, should_be_visible)
         if not should_be_visible:
             self.scroll_to_element(element)
         element.click()

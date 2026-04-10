@@ -12,7 +12,13 @@ from framework.page_object.pages.components.support_project import \
 
 
 class DocumentationPage(BasePage):
-    url = f'{variables.MAIN_URL}/documentation/'
+    @property
+    def url(self):
+        if self.device.locale == 'en':
+            locale = ''
+        else:
+            locale = f'{self.device.locale}/'
+        return f'{variables.MAIN_URL}/{locale}documentation/'
 
     @property
     def locators(self):
@@ -20,7 +26,7 @@ class DocumentationPage(BasePage):
 
     @property
     def header(self):
-        return Header(self.device)
+        return Header(self.device, translation_supported=True)
 
     @property
     def footer(self):
@@ -34,12 +40,13 @@ class DocumentationPage(BasePage):
     def support_project(self):
         return SupportProject(self.device)
 
-    def check_page_presence(self, article_title: str = 'The Selenium Browser Automation Project', article_url: str = '', fast_check=False):
+    def check_page_presence(self, article_title: str = None, article_url: str = '', fast_check=False):
+        if not article_title:
+            article_title = self.translator.get_translation('documentation.default_article_title')
         with allure.step('Wait page title'):
             self.actions.wait_page_title(f'{article_title} {self.translator.get_translation('documentation.page_title')}')
         with allure.step('Check page url'):
-            self.url += article_url
-            self.check_page_url()
+            self.check_page_url(expected_end=article_url)
         with allure.step('Check page header'):
             self.header.check_presence()
         with allure.step('Check article title'):

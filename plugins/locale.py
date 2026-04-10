@@ -3,7 +3,7 @@ import os
 import i18n
 import pytest
 
-supported_locale = ['en', 'ch']
+supported_locale = ['en', 'pt-br', 'zh-cn', 'ja']
 
 
 @pytest.hookimpl(tryfirst=True)

@@ -2,15 +2,15 @@ import allure
 import pytest
 
 
-class TestHeader:
+class TestHeaderNavigation:
     @allure.title('Test header navigation')
     @pytest.mark.parametrize('device', ['chrome'], indirect=True)
-    def test_navigation(self, device, page):
+    def test_positive(self, device, page):
         header = page.header_component
         with allure.step('Open Main page'):
             page.main_page.open_page()
         with allure.step('Check presence page header'):
-            header.check_presence()
+            page.main_page.header.check_presence()
         with allure.step('Click header button "About"'):
             header.click_about_button()
         with allure.step('Check presence About dropdown buttons'):

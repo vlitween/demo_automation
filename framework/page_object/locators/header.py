@@ -61,6 +61,18 @@ class HeaderLocators(BaseLocator):
                 description='Language selection button'
             )
 
+    def language_selection_dropdown(self, current_language: str):
+        return self.new_locator(
+            chrome_xpath=f'//li[contains(@class, "nav-item") and .//a[normalize-space()="{current_language}"]]//ul[contains(@class, "dropdown-menu")]',
+            description='Language selection dropdown'
+        )
+
+    def language_dropdown_item(self, item_value: str):
+        return self.new_locator(
+            chrome_xpath=f'//a[contains(@class, "dropdown-item") and normalize-space()="{item_value}"]',
+            description=f'Language dropdown item "{item_value}"'
+        )
+
     @property
     def search_button(self):
         search_text = self.translator.get_translation('header.search')

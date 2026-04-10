@@ -2,7 +2,7 @@ import allure
 import pytest
 
 
-class TestProjects:
+class TestProjectsPresence:
     @allure.title('Test Projects page')
     @pytest.mark.parametrize('device', ['chrome'], indirect=True)
     def test_positive(self, device, page):
