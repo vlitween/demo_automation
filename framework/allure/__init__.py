@@ -39,7 +39,7 @@ def allure_step_exit_wrapper(device, orig_func):
     def wrapper(self, exc_type, exc_val, exc_tb, screenshot=device.config.attach_screenshots):
         if screenshot:
             try:
-                screenshot_data = device.get_screenshot()
+                screenshot_data = device.get_screenshot_as_png()
                 screenshot_data = image_half_resize(screenshot_data)
             except Exception as e:
                 print(e)

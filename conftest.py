@@ -1,9 +1,7 @@
 import allure
-import i18n
 import pytest
 
-from framework.driver.playwright_device import PlaywrightDevice
-from framework.driver.selenium_device import SeleniumDevice
+from framework.driver.selenium_driver import SeleniumDriver
 from framework.page_object.base.page_factory import Page
 
 pytest_plugins = ['plugins.locale', 'plugins.config', 'plugins.allure']
@@ -16,45 +14,33 @@ def pytest_runtest_makereport(item, call):
     report = outcome.get_result()
 
     if report.when == 'call':
-        device = item.funcargs['device']
+        driver = item.funcargs['device']
 
         if report.failed:
             try:
-                page_source = device.get_page_source()
+                page_source = driver.page_source
                 allure.attach(page_source, name='Page Source', attachment_type=allure.attachment_type.TEXT)
             except Exception as e:
                 allure.attach(str(e), name='Page Source', attachment_type=allure.attachment_type.TEXT)
 
 
-@pytest.fixture(autouse=True)
-def reset_locale(config):
-    initial_locale = i18n.get('locale')
-    yield
-    i18n.set('locale', initial_locale)
-
-
 @pytest.fixture(scope='function')
 def selenium(request, config):
-    device = SeleniumDevice(config)
-    device.config = config
-    device.device_type = 'selenium'
-    device.locale = config.locale
-    if config.selenium.window_size:
-        device.driver.set_window_size(*config.selenium.window_size)
+    caps = config.selenium.capabilities.to_dict()
+    if config.selenium.use_local:
+        remote_ip = None
     else:
-        device.driver.maximize_window()
-    yield device
-    device.driver.quit()
-
-
-@pytest.fixture(scope='function')
-def playwright(request, config):
-    playwright_device = PlaywrightDevice(config)
-    playwright_device.config = config
-    playwright_device.device_type = 'playwright'
-    playwright_device.locale = config.locale
-    yield playwright_device
-    playwright_device.stop()
+        remote_ip = config.selenium.remote_driver_address
+    driver = SeleniumDriver().driver_init(caps=caps, remote_ip=remote_ip)
+    driver.config = config
+    driver.device_type = 'selenium'
+    driver.locale = config.locale
+    if config.selenium.window_size:
+        driver.set_window_size(*config.selenium.window_size)
+    else:
+        driver.maximize_window()
+    yield driver
+    driver.quit()
 
 
 @pytest.fixture(scope='function')

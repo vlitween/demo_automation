@@ -3,30 +3,30 @@ from typing import Union
 
 from selenium.common import NoSuchElementException, TimeoutException
 from selenium.webdriver.common.by import By
+from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 
-from framework.driver.selenium_device import SeleniumDevice
 from framework.page_object.base.base_locator import UniversalLocator
 from framework.utils.image_processor import ImageProcessor
 
 
 class SeleniumActions:
-    def __init__(self, device: SeleniumDevice):
+    def __init__(self, device: WebDriver):
         self.device = device
 
     def open_url(self, url):
-        return self.device.driver.get(url)
+        return self.device.get(url)
 
     def get_page_url(self):
-        actual_url = self.device.driver.current_url
+        actual_url = self.device.current_url
         return actual_url
 
     def wait_page_title(self, expected_title, timeout=10):
         start_time = time.time()
         while time.time() - start_time < timeout:
-            actual_title = self.device.driver.title
+            actual_title = self.device.title
             if actual_title == expected_title:
                 return
             time.sleep(1)
@@ -36,9 +36,9 @@ class SeleniumActions:
         xpath = locator.chrome_xpath
         try:
             if no_wait:
-                return self.device.driver.find_element(By.XPATH, xpath)
+                return self.device.find_element(By.XPATH, xpath)
             else:
-                wait = WebDriverWait(self.device.driver, timeout)
+                wait = WebDriverWait(self.device, timeout)
                 if should_be_visible:
                     return wait.until(
                         expected_conditions.visibility_of_element_located((By.XPATH, xpath)))
@@ -68,9 +68,9 @@ class SeleniumActions:
         xpath = locator.chrome_xpath
         try:
             if no_wait:
-                return self.device.driver.find_elements(By.XPATH, xpath)
+                return self.device.find_elements(By.XPATH, xpath)
             else:
-                return WebDriverWait(self.device.driver, timeout).until(
+                return WebDriverWait(self.device, timeout).until(
                     expected_conditions.presence_of_all_elements_located((By.XPATH, xpath)))
         except (TimeoutException, NoSuchElementException):
             return None
@@ -93,7 +93,7 @@ class SeleniumActions:
         if offset is None:
             # Standard behavior
             alignment = 'true' if to_top else 'false'
-            self.device.driver.execute_script(f"arguments[0].scrollIntoView({alignment});", element)
+            self.device.execute_script(f"arguments[0].scrollIntoView({alignment});", element)
         else:
             # Manual calculation with offset
             if to_top:
@@ -117,7 +117,7 @@ class SeleniumActions:
                     behavior: 'smooth'
                 });
                 """
-            self.device.driver.execute_script(script, element, offset)
+            self.device.execute_script(script, element, offset)
 
         time.sleep(0.5)
 

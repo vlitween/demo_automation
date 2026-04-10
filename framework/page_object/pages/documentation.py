@@ -30,7 +30,7 @@ class DocumentationPage(BasePage):
 
     @property
     def footer(self):
-        return Footer(self.device, translation_supported=True)
+        return Footer(self.device)
 
     @property
     def partners_and_sponsors(self):
