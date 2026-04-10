@@ -31,7 +31,7 @@ class MainPage(BasePage):
 
     @property
     def footer(self):
-        return Footer(self.device)
+        return Footer(self.device, translation_supported=True)
 
     @property
     def partners_and_sponsors(self):
