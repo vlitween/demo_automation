@@ -5,12 +5,17 @@ from python_json_config import Config
 class PlaywrightDevice:
     def __init__(self, config: Config):
         self.playwright = sync_playwright().start()
-        self.browser = self.playwright.chromium.launch(
-            args=['--start-maximized'],
-            headless=config.playwright.headless
-        )
-        self.context = self.browser.new_context(no_viewport=True) if not config.playwright.headless\
-            else self.browser.new_context(viewport={'width': int(config.playwright.headless_window_size[0]), 'height': int(config.playwright.headless_window_size[1])})
+        if config.playwright.use_local:
+            self.browser = self.playwright.chromium.launch(
+                args=['--start-maximized'],
+                headless=config.playwright.headless
+            )
+        else:
+            self.browser = self.playwright.chromium.connect(config.playwright.remote_ws_address)
+        if config.playwright.headless or not config.playwright.use_local:
+            self.context = self.browser.new_context(viewport={'width': 1920, 'height': 1080})
+        else:
+            self.context = self.browser.new_context(no_viewport=True)
         self.page = self.context.new_page()
 
     def stop(self):

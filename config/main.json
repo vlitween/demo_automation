@@ -12,6 +12,7 @@
   },
   "playwright": {
     "headless": true,
-    "headless_window_size": [1920, 1080]
+    "use_local": true,
+    "remote_ws_address": "ws://localhost:8080/"
   }
 }
