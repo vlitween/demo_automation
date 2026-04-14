@@ -30,7 +30,7 @@ class SeleniumActions:
             if actual_title == expected_title:
                 return
             time.sleep(1)
-        raise TimeoutException(f'Page title "{expected_title}" not found after {timeout} seconds')
+        raise AssertionError(f'Page title "{expected_title}" not found after {timeout} seconds')
 
     def find_element(self, locator: UniversalLocator, no_wait=False, timeout=10, should_be_visible=False) -> Union[WebElement, None]:
         xpath = locator.chrome_xpath

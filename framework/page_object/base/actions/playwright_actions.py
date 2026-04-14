@@ -21,12 +21,13 @@ class PlaywrightActions:
 
     def wait_page_title(self, expected_title, timeout=10):
         start_time = time.time()
+        actual_title = None
         while time.time() - start_time < timeout:
             actual_title = self.device.page.title()
             if actual_title == expected_title:
                 return
             time.sleep(1)
-        raise TimeoutError(f'Page title "{expected_title}" not found after {timeout} seconds')
+        raise AssertionError(f'Page title "{expected_title}" not found after {timeout} seconds. Actual title is "{actual_title}"')
 
     def find_element(self, locator: UniversalLocator, no_wait=False, timeout=10, should_be_visible=False) -> Union[Locator, None]:
         xpath = f"xpath={locator.chrome_xpath}"

@@ -50,9 +50,6 @@ def selenium(request, config):
 @pytest.fixture(scope='function')
 def playwright(request, config):
     playwright_device = PlaywrightDevice(config)
-    playwright_device.config = config
-    playwright_device.device_type = 'playwright'
-    playwright_device.locale = config.locale
     yield playwright_device
     playwright_device.stop()
 
