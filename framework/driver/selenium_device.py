@@ -20,7 +20,8 @@ class SeleniumDevice:
                             chrome_options.add_argument(arg)
                     else:
                         chrome_options.set_capability(key, value)
-            if not self.config.selenium.use_local:
+            is_local = self.config.selenium.use_local if self.config.selenium.use_local is not None else True
+            if not is_local:
                 driver = webdriver.Remote(
                     command_executor=self.config.selenium.remote_driver_address,
                     options=chrome_options

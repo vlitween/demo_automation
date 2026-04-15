@@ -4,17 +4,21 @@ from python_json_config import Config
 
 class PlaywrightDevice:
     def __init__(self, config: Config):
+        is_local = config.playwright.use_local if config.playwright.use_local is not None else True
+        is_headless = config.playwright.headless if config.playwright.headless is not None else False
         self.playwright = sync_playwright().start()
 
-        if config.playwright.use_local:
+        if is_local:
             self.browser = self.playwright.chromium.launch(
                 args=['--start-maximized'],
-                headless=config.playwright.headless
+                headless=is_headless
             )
         else:
-            self.browser = self.playwright.chromium.connect(config.playwright.remote_ws_address)
-        if config.playwright.headless or not config.playwright.use_local:
-            self.context = self.browser.new_context(viewport={'width': 1920, 'height': 1080})
+            remote_address = config.playwright.remote_ws_address if config.playwright.remote_ws_address is not None else 'ws://localhost:8080/'
+            self.browser = self.playwright.chromium.connect(remote_address)
+        if is_headless or not is_local:
+            size = config.playwright.window_size if config.playwright.window_size is not None else [1920, 1080]
+            self.context = self.browser.new_context(viewport={'width': size[0], 'height': size[1]})
         else:
             self.context = self.browser.new_context(no_viewport=True)
 

@@ -6,6 +6,7 @@
   "selenium": {
     "remote_driver_address": "http://127.0.0.1:4444/wd/hub",
     "use_local": true,
+    "window_size": [1920, 1080],
     "capabilities": {
             "browserName": "chrome"
         }
@@ -13,6 +14,7 @@
   "playwright": {
     "headless": true,
     "use_local": true,
+    "window_size": [1920, 1080],
     "remote_ws_address": "ws://localhost:8080/"
   }
 }
