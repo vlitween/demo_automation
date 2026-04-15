@@ -1,3 +1,4 @@
+from behavex_images import image_attachments
 from python_json_config import ConfigBuilder
 
 from framework.driver.playwright_device import PlaywrightDevice
@@ -14,6 +15,10 @@ def before_scenario(context, scenario):
     Translator.init_i18n(context.test_config)
     context.device = PlaywrightDevice(context.test_config)
     context.page = Page(context.device)
+
+
+def after_step(context, step):
+    image_attachments.attach_image_binary(context, context.device.get_screenshot())
 
 
 def after_scenario(context, scenario):
