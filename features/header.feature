@@ -4,10 +4,11 @@ Feature: Header Navigation
     Given Main page is opened
     Then  Main page header is displayed
 
+
+  @smoke
   Scenario Outline: Verify top-level navigation links
     When Click header navigation button "<button_name>"
     Then <page_name> page is displayed
-
 
     Examples:
       | button_name   | page_name     |
@@ -17,11 +18,11 @@ Feature: Header Navigation
       | Support       | Support       |
       | Blog          | Blog          |
 
+
   Scenario Outline: Verify About dropdown navigation
     When Click header navigation button "About"
     And  Click header navigation button "<sub_button>"
     Then <sub_page> page is displayed
-
 
     Examples:
       | sub_button               | sub_page                 |
@@ -33,6 +34,7 @@ Feature: Header Navigation
       | Get Involved             | Get Involved             |
       | Sponsors                 | Sponsors                 |
       | Sponsor Us               | Sponsor Us               |
+
 
   Scenario: Verify logo returns user to Main page
     When Click header navigation button "Projects"

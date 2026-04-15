@@ -11,6 +11,7 @@ class TestHeaderNavigation:
             page.main_page.open_page()
 
     @allure.title('Top navigation: {button_name}')
+    @pytest.mark.smoke
     @pytest.mark.parametrize('button_name, page_attr', [
         ('Downloads', 'downloads_page'),
         ('Documentation', 'documentation_page'),
