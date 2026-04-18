@@ -1,5 +1,6 @@
 allure-pytest~=2.15.3
 allure-python-commons~=2.15.3
+Appium-Python-Client~=5.3.0
 behavex~=4.6.0
 pillow~=12.1.1
 playwright~=1.58.0

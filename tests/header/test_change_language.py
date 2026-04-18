@@ -2,7 +2,7 @@ import allure
 import pytest
 
 
-@pytest.mark.parametrize('device', ['chrome'], indirect=True)
+@pytest.mark.parametrize('device', ['chrome', 'android', 'ios'], indirect=True)
 class TestChangeLanguage:
     @allure.title('Change language to {target_locale}')
     @pytest.mark.parametrize('target_locale', ['en', 'pt-br', 'zh-cn', 'ja'])

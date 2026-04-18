@@ -87,7 +87,7 @@ class MainPage(BasePage):
             self.checks.verify_strings(self.actions.get_element_text(description),
                                        self.translator.get_translation('main.getting_started.webdriver.description'))
             link = self.actions.check_item_exists(self.locators.getting_started_block_link, webdriver_block)
-            self.checks.verify_strings(self.actions.get_element_text(link),
+            self.checks.verify_strings(self.actions.get_element_text(link).upper(),
                                        self.translator.get_translation('main.getting_started.webdriver.link'))
 
         with allure.step('Check presence Selenium IDE block'):
@@ -101,7 +101,7 @@ class MainPage(BasePage):
             self.checks.verify_strings(self.actions.get_element_text(description),
                                        self.translator.get_translation('main.getting_started.ide.description'))
             link = self.actions.check_item_exists(self.locators.getting_started_block_link, ide_block)
-            self.checks.verify_strings(self.actions.get_element_text(link),
+            self.checks.verify_strings(self.actions.get_element_text(link).upper(),
                                        self.translator.get_translation('main.getting_started.ide.link'))
 
         with allure.step('Check presence Selenium Grid block'):
@@ -115,7 +115,7 @@ class MainPage(BasePage):
             self.checks.verify_strings(self.actions.get_element_text(description),
                                        self.translator.get_translation('main.getting_started.grid.description'))
             link = self.actions.check_item_exists(self.locators.getting_started_block_link, grid_block)
-            self.checks.verify_strings(self.actions.get_element_text(link),
+            self.checks.verify_strings(self.actions.get_element_text(link).upper(),
                                        self.translator.get_translation('main.getting_started.grid.link'))
 
     def check_presence_news_section(self):

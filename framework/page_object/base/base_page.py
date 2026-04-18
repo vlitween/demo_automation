@@ -1,4 +1,6 @@
 import framework.utils.checks as ch
+from framework.page_object.base.actions.android_actions import AndroidActions
+from framework.page_object.base.actions.ios_actions import IOSActions
 from framework.page_object.base.actions.playwright_actions import \
     PlaywrightActions
 from framework.page_object.base.actions.selenium_actions import SeleniumActions
@@ -11,6 +13,10 @@ def get_actions(device):
         return SeleniumActions(device)
     elif device_type == 'playwright':
         return PlaywrightActions(device)
+    elif device_type == 'android':
+        return AndroidActions(device)
+    elif device_type == 'ios':
+        return IOSActions(device)
     else:
         return None
 

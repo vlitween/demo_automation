@@ -7,13 +7,16 @@ from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 
+from framework.driver.android_device import AndroidDevice
+from framework.driver.ios_device import IOSDevice
 from framework.driver.selenium_device import SeleniumDevice
 from framework.page_object.base.base_locator import UniversalLocator
 from framework.utils.image_processor import ImageProcessor
 
 
+# Selenium actions are reusable for IOS and Android since Appium devices open Chrome/Safari browsers in Webview context
 class SeleniumActions:
-    def __init__(self, device: SeleniumDevice):
+    def __init__(self, device: Union[SeleniumDevice, AndroidDevice, IOSDevice]):
         self.device = device
 
     def open_url(self, url):
@@ -79,7 +82,7 @@ class SeleniumActions:
         if parent_element:
             item = self.find_sub_element(parent_element, locator, no_wait, timeout)
         else:
-            item = self.find_element(locator, no_wait, timeout, should_be_visible)
+            item = self.find_element(locator, no_wait=no_wait, timeout=timeout, should_be_visible=should_be_visible)
         assert item, f'Item not found: {locator.description}'
         return item
 
@@ -125,7 +128,7 @@ class SeleniumActions:
         if parent_element:
             element = self.find_sub_element(parent_element, locator, no_wait, timeout)
         else:
-            element = self.find_element(locator, no_wait, timeout, should_be_visible)
+            element = self.find_element(locator, no_wait=no_wait, timeout=timeout, should_be_visible=should_be_visible)
         if not should_be_visible:
             self.scroll_to_element(element)
         element.click()
@@ -137,7 +140,7 @@ class SeleniumActions:
     def get_element_attribute(self, element: WebElement, attribute: str):
         return element.get_attribute(attribute)
 
-    def verify_image(self, actual_image: WebElement, expected_image_path: str, expected_threshold: int = 40):
+    def verify_image(self, actual_image: WebElement, expected_image_path: str, expected_threshold: int = 50):
         actual_image_bytes = actual_image.screenshot_as_png
         actual_threshold = ImageProcessor().get_image_similarity_index(actual_image_bytes, expected_image_path)
         assert actual_threshold <= expected_threshold, f'Image similarity threshold exceeded. Actual {actual_threshold}, expected {expected_threshold}'

@@ -2,6 +2,8 @@ import allure
 import i18n
 import pytest
 
+from framework.driver.android_device import AndroidDevice
+from framework.driver.ios_device import IOSDevice
 from framework.driver.playwright_device import PlaywrightDevice
 from framework.driver.selenium_device import SeleniumDevice
 from framework.page_object.base.page_factory import Page
@@ -52,6 +54,26 @@ def playwright(request, config):
     playwright_device = PlaywrightDevice(config)
     yield playwright_device
     playwright_device.stop()
+
+
+@pytest.fixture(scope='function')
+def android(request, config, worker_id):
+    device = AndroidDevice(config, worker_id)
+    device.config = config
+    device.device_type = 'android'
+    device.locale = config.locale
+    yield device
+    device.driver.quit()
+
+
+@pytest.fixture(scope='function')
+def ios(request, config, worker_id):
+    device = IOSDevice(config, worker_id)
+    device.config = config
+    device.device_type = 'ios'
+    device.locale = config.locale
+    yield device
+    device.driver.quit()
 
 
 @pytest.fixture(scope='function')

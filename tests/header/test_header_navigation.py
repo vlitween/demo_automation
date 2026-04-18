@@ -2,7 +2,7 @@ import allure
 import pytest
 
 
-@pytest.mark.parametrize('device', ['chrome'], indirect=True)
+@pytest.mark.parametrize('device', ['chrome', 'android', 'ios'], indirect=True)
 class TestHeaderNavigation:
 
     @pytest.fixture(autouse=True)

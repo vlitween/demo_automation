@@ -16,5 +16,45 @@
     "use_local": true,
     "window_size": [1920, 1080],
     "remote_ws_address": "ws://localhost:8080/"
+  },
+  "android": {
+    "appium_endpoint": "http://127.0.0.1:4723/wd/hub",
+    "capabilities": {
+            "appium:androidNaturalOrientation": true,
+            "browserName": "Chrome",
+            "appium:autoGrantPermissions": true,
+            "platformName": "Android",
+            "appium:automationName": "UiAutomator2",
+            "appium:chromeOptions": {
+              "args": [
+                "--no-first-run",
+                "--disable-fre",
+                "--disable-notifications"
+              ]
+      }
+    },
+    "device_pool": [
+        {"udid": "emulator-5554", "sys_port": 8200, "chrome_port": 9515},
+        {"udid": "emulator-5556", "sys_port": 8201, "chrome_port": 9516},
+        {"udid": "emulator-5558", "sys_port": 8202, "chrome_port": 9517},
+        {"udid": "emulator-5560", "sys_port": 8203, "chrome_port": 9518},
+        {"udid": "emulator-5562", "sys_port": 8204, "chrome_port": 9519}
+    ]
+  },
+  "ios": {
+    "appium_endpoint": "http://127.0.0.1:4723/wd/hub",
+    "capabilities": {
+            "appium:automationName": "XCUITest",
+            "appium:platformName": "iOS",
+            "appium:browserName": "Safari",
+            "safari:useSimulator": true
+      },
+    "device_pool": [
+        {"device_name": "iPad 1", "wda_port": 8100},
+        {"device_name": "iPad 2", "wda_port": 8101},
+        {"device_name": "iPad 3", "wda_port": 8102},
+        {"device_name": "iPad 4", "wda_port": 8103},
+        {"device_name": "iPad 5", "wda_port": 8104}
+    ]
+    }
   }
-}

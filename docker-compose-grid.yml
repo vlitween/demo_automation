@@ -27,4 +27,5 @@ services:
         limits:
           memory: "2G"
 
-  # docker-compose up --scale chrome=5 -d
+# run command: docker-compose -f docker-compose-grid.yml up --scale chrome=5 -d
+# stop command: docker-compose -f docker-compose-grid.yml down
