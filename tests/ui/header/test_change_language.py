@@ -6,6 +6,7 @@ import pytest
 class TestChangeLanguage:
     @allure.title('Change language to {target_locale}')
     @pytest.mark.parametrize('target_locale', ['en', 'pt-br', 'zh-cn', 'ja'])
+    @pytest.mark.ui
     def test_positive(self, device, page, target_locale):
         actual_locale = device.locale
         if actual_locale == target_locale:

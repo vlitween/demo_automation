@@ -12,6 +12,7 @@ class TestHeaderNavigation:
 
     @allure.title('Top navigation: {button_name}')
     @pytest.mark.smoke
+    @pytest.mark.ui
     @pytest.mark.parametrize('button_name, page_attr', [
         ('Downloads', 'downloads_page'),
         ('Documentation', 'documentation_page'),
@@ -30,6 +31,7 @@ class TestHeaderNavigation:
             target_page.check_page_presence(fast_check=True)
 
     @allure.title('About dropdown navigation: {button_name}')
+    @pytest.mark.ui
     @pytest.mark.parametrize('button_name, page_attr', [
         ('About Selenium', 'about_selenium_page'),
         ('Structure and Governance', 'structure_and_governance_page'),

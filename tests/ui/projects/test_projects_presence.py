@@ -5,6 +5,7 @@ import pytest
 class TestProjectsPresence:
     @allure.title('Test Projects page')
     @pytest.mark.parametrize('device', ['chrome', 'android', 'ios'], indirect=True)
+    @pytest.mark.ui
     def test_positive(self, device, page):
         projects_page = page.projects_page
         with allure.step('Open Projects page'):

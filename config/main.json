@@ -56,5 +56,9 @@
         {"device_name": "iPad 4", "wda_port": 8103},
         {"device_name": "iPad 5", "wda_port": 8104}
     ]
-    }
+    },
+  "api": {
+    "endpoint": "https://swapi.dev/api",
+    "response_latency_threshhold": 1000
+  }
   }

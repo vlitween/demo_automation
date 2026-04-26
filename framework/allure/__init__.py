@@ -35,7 +35,7 @@ def image_half_resize(pic: bytes):
     return result.getvalue()
 
 
-def allure_step_exit_wrapper(device, orig_func):
+def allure_step_exit_wrapper_ui(device, orig_func):
     def wrapper(self, exc_type, exc_val, exc_tb):
         if device.config.attach_screenshots:
             try:
@@ -52,9 +52,17 @@ def allure_step_exit_wrapper(device, orig_func):
     return wrapper
 
 
-def allure_step_enter_wrapper(device, orig_func):
+def allure_step_enter_wrapper_ui(device, orig_func):
     def wrapper(self):
         if device.config.log_steps:
+            print(f'{datetime.now()}   {self.title}')
+        orig_func(self)
+    return wrapper
+
+
+def allure_step_enter_wrapper_api(config, orig_func):
+    def wrapper(self):
+        if config.log_steps:
             print(f'{datetime.now()}   {self.title}')
         orig_func(self)
     return wrapper

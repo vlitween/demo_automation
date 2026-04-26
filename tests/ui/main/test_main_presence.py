@@ -5,6 +5,7 @@ import pytest
 class TestMainPresence:
     @allure.title('Test main page')
     @pytest.mark.smoke
+    @pytest.mark.ui
     @pytest.mark.parametrize('device', ['chrome', 'android', 'ios'], indirect=True)
     def test_positive(self, device, page):
         main_page = page.main_page

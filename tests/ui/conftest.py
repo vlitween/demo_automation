@@ -2,13 +2,14 @@ import allure
 import i18n
 import pytest
 
+from framework.api.base.service_factory import Service
 from framework.driver.android_device import AndroidDevice
 from framework.driver.ios_device import IOSDevice
 from framework.driver.playwright_device import PlaywrightDevice
 from framework.driver.selenium_device import SeleniumDevice
 from framework.page_object.base.page_factory import Page
 
-pytest_plugins = ['plugins.locale', 'plugins.config', 'plugins.allure']
+pytest_plugins = ['plugins.locale', 'plugins.config', 'plugins.allure_ui']
 
 
 @pytest.hookimpl(tryfirst=True, hookwrapper=True)
@@ -88,3 +89,8 @@ def device(request, config):
 @pytest.fixture(scope='function')
 def page(device):
     return Page(device)
+
+
+@pytest.fixture(scope='function')
+def service(request, config):
+    return Service(config)
