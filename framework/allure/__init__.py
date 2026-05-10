@@ -1,18 +1,9 @@
 import io
 import uuid
 from datetime import datetime
-from threading import Lock, local
 
 import allure
 from PIL import Image
-
-allure_attach_orig = allure.attach
-
-test_context = local()
-
-screenshot_buffer = {}
-step_screenshot_buffer = {}
-buffer_lock = Lock()
 
 
 def image_half_resize(pic: bytes):
@@ -35,9 +26,9 @@ def image_half_resize(pic: bytes):
     return result.getvalue()
 
 
-def allure_step_exit_wrapper_ui(device, orig_func):
+def allure_step_exit_wrapper(device, orig_func):
     def wrapper(self, exc_type, exc_val, exc_tb):
-        if device.config.attach_screenshots:
+        if device and device.config.attach_screenshots:
             try:
                 screenshot_data = device.get_screenshot()
                 screenshot_data = image_half_resize(screenshot_data)
@@ -52,15 +43,7 @@ def allure_step_exit_wrapper_ui(device, orig_func):
     return wrapper
 
 
-def allure_step_enter_wrapper_ui(device, orig_func):
-    def wrapper(self):
-        if device.config.log_steps:
-            print(f'{datetime.now()}   {self.title}')
-        orig_func(self)
-    return wrapper
-
-
-def allure_step_enter_wrapper_api(config, orig_func):
+def allure_step_enter_wrapper(config, orig_func):
     def wrapper(self):
         if config.log_steps:
             print(f'{datetime.now()}   {self.title}')

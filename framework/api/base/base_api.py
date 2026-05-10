@@ -56,7 +56,7 @@ class BaseApi:
 
     def check_response_latency(self, response: Response, expected_latency: int = None):
         if not expected_latency:
-            expected_latency = self.config.api.response_latency_threshhold
+            expected_latency = self.config.api.response_latency_threshhold or 1000
         actual_latency = int(response.elapsed.microseconds / 1000)
         assert actual_latency < expected_latency, f'Expected latency threshold {expected_latency} but got {actual_latency} for {response.url}'
 

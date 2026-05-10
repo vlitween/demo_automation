@@ -132,6 +132,7 @@ class PlaywrightActions:
             element = self.find_sub_element(parent_element, locator, no_wait, timeout)
         else:
             element = self.find_element(locator, no_wait, timeout, should_be_visible)
+        assert element, f'Element not found for clicking: {locator.description}'
         if not should_be_visible:
             self.scroll_to_element(element)
         element.click()

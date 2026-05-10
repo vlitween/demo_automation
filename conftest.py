@@ -2,14 +2,14 @@ import allure
 import i18n
 import pytest
 
-from framework.api.base.service_factory import Service
+from framework.api.base.resource_factory import Resource
 from framework.driver.android_device import AndroidDevice
 from framework.driver.ios_device import IOSDevice
 from framework.driver.playwright_device import PlaywrightDevice
 from framework.driver.selenium_device import SeleniumDevice
 from framework.page_object.base.page_factory import Page
 
-pytest_plugins = ['plugins.locale', 'plugins.config', 'plugins.allure_ui']
+pytest_plugins = ['plugins.locale', 'plugins.config', 'plugins.allure']
 
 
 @pytest.hookimpl(tryfirst=True, hookwrapper=True)
@@ -19,9 +19,9 @@ def pytest_runtest_makereport(item, call):
     report = outcome.get_result()
 
     if report.when == 'call':
-        device = item.funcargs['device']
+        device = item.funcargs['device'] if 'device' in item.funcargs else None
 
-        if report.failed:
+        if report.failed and device:
             try:
                 page_source = device.get_page_source()
                 allure.attach(page_source, name='Page Source', attachment_type=allure.attachment_type.TEXT)
@@ -36,7 +36,7 @@ def reset_locale(config):
     i18n.set('locale', initial_locale)
 
 
-@pytest.fixture(scope='function')
+@pytest.fixture()
 def selenium(request, config):
     device = SeleniumDevice(config)
     device.config = config
@@ -50,14 +50,14 @@ def selenium(request, config):
     device.driver.quit()
 
 
-@pytest.fixture(scope='function')
+@pytest.fixture()
 def playwright(request, config):
     playwright_device = PlaywrightDevice(config)
     yield playwright_device
     playwright_device.stop()
 
 
-@pytest.fixture(scope='function')
+@pytest.fixture()
 def android(request, config, worker_id):
     device = AndroidDevice(config, worker_id)
     device.config = config
@@ -67,7 +67,7 @@ def android(request, config, worker_id):
     device.driver.quit()
 
 
-@pytest.fixture(scope='function')
+@pytest.fixture()
 def ios(request, config, worker_id):
     device = IOSDevice(config, worker_id)
     device.config = config
@@ -77,7 +77,7 @@ def ios(request, config, worker_id):
     device.driver.quit()
 
 
-@pytest.fixture(scope='function')
+@pytest.fixture()
 def device(request, config):
     if request.param == 'chrome':
         device_name = config.browser_engine
@@ -86,11 +86,11 @@ def device(request, config):
     return request.getfixturevalue(device_name)
 
 
-@pytest.fixture(scope='function')
+@pytest.fixture()
 def page(device):
     return Page(device)
 
 
-@pytest.fixture(scope='function')
-def service(request, config):
-    return Service(config)
+@pytest.fixture()
+def resource(request, config):
+    return Resource(config)

@@ -32,26 +32,14 @@ class PlaywrightDevice:
         try:
             if hasattr(self, 'page') and self.page:
                 self.page.close()
-        except Exception as e:
-            print(f'Error on closing page: {e}')
-
-        try:
             if hasattr(self, 'context') and self.context:
                 self.context.close()
-        except Exception as e:
-            print(f'Error on closing context: {e}')
-
-        try:
             if hasattr(self, 'browser') and self.browser:
                 self.browser.close()
-        except Exception as e:
-            print(f'Error on closing browser: {e}')
-
-        try:
             if hasattr(self, 'playwright') and self.playwright:
                 self.playwright.stop()
         except Exception as e:
-            print(f'Error on stopping Playwright: {e}')
+            print(f'Error on stopping playwright: {e}')
 
     def get_screenshot(self):
         return self.page.screenshot()

@@ -8,7 +8,8 @@
 - [Project Structure](#project-structure)
 - [Configuration Schema](#setup-configuration-files)
 - [How to Run Tests](#how-to-run-tests)
-  - [Pytest (UI)](#ui-tests-over-pytest)
+  - [API Tests](#api-tests-over-pytest)
+  - [UI Tests](#ui-tests-over-pytest)
   - [BehaveX (BDD)](#ui-tests-over-behave)
 - [Mobile Execution Notes](#additional-notes-on-running-tests-with-ios--android-devices)
 
@@ -46,8 +47,8 @@ To showcase flexibility in automation strategy the framework supports two distin
 
 #### API Automation ####
 
-- [ ] Create base structure for API tests
-- [ ] Add functional tests using open API [Swapi](https://swapi.dev)
+- [x] Create base structure for API tests
+- [x] Add functional tests using open API [Swapi](https://swapi.dev)
 - [ ] Add load tests using [Locust framework](https://locust.io/)
 
 
@@ -91,6 +92,11 @@ demo_automation/
 │   ├── steps/                       # Python step definitions
 │   └── environment.py               # Behavex hooks (before/after)
 ├── framework/                       # UI automation files
+│   ├── api/                         # API automation framework
+│   │   ├── base/                    # Base API classes and resource factory
+│   │   ├── clients/                 # HTTP client implementations
+│   │   ├── resources/               # API resource implementations
+│   │   └── response_models/         # Pydantic response models
 │   ├── allure/                      # Specific methods for Allure plugin
 │   ├── driver/                      # Specific devices/drivers for UI automation
 │   ├── page_object/                 # Page object entities
@@ -102,6 +108,8 @@ demo_automation/
 ├── runners/                         # Automatic scripts to run specific tests
 ├── scripts/                         # Custom Python scripts
 ├── tests/                           # Pytest tests
+│   ├── api/                         # API tests
+│   └── ui/                          # UI tests
 ├── .pre-commit-config.yaml          # Precommit hooks configuration
 ├── conftest.py                      # Pytest configuration file
 ├── docker-compose-grid.yml          # Example docker compose file for running Selenium Grid in Docker
@@ -190,6 +198,16 @@ Configuration files shall respect the following schema:
 | **device_pool[].wda_port**    | `integer` | Yes      | Unique WDA port to create Appium device                                                                     |
 ---
 
+### API Configuration
+*Used for API tests.*
+
+| Key                           | Type       | Required | Description                                                                                                 |
+|:------------------------------|:-----------|:---------|:------------------------------------------------------------------------------------------------------------|
+| **endpoint**                  | `string`   | Yes      | Base URL for the API under test                                                                             |
+| **response_latency_threshhold**| `integer`  | No       | Maximum allowed response time in milliseconds. Defaults to `1000` if not specified.                         |
+
+---
+
 ### Example `config/main.json`
 
 ```json
@@ -251,11 +269,30 @@ Configuration files shall respect the following schema:
         {"device_name": "iPad 4", "wda_port": 8103},
         {"device_name": "iPad 5", "wda_port": 8104}
     ]
-    }
+    },
+  "api": {
+    "endpoint": "https://swapi.dev/api",
+    "response_latency_threshhold": 1000
   }
+}
 ```
 
 ## How to run tests
+
+### API tests over Pytest
+API tests are placed in the `/tests/api` folder and use the SWAPI (Star Wars API) for functional testing.
+
+Running API tests follows the same Pytest patterns as UI tests:
+
+```bash
+pytest tests/api
+```
+
+API tests use the `@pytest.mark.api` marker and can be run selectively:
+
+```bash
+pytest -v -k "api" tests
+```
 
 ### UI tests over Pytest
 All Pytest UI tests are placed in the `/tests` folder.
